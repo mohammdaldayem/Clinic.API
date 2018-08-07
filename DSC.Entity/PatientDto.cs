@@ -4,7 +4,7 @@ namespace DSC.Entity
 {
     public class PatientDto
     {
-        public string PatientName { set; get; }
+        public string PatientName { set; get; } 
         public int PatientID { set; get; }
         public int PatientNo { set; get; }
         public string Gender { set; get; }
