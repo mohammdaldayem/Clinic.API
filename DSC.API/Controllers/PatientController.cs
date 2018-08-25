@@ -64,7 +64,18 @@ namespace DSC.API.Controllers
             string Tratment = await _PatientDL.GetPatientTreatment(PatientID, VisitID);
             return Ok(Tratment);
         }
+        [HttpPost]
+        [Route("InseartPatientImage/{Treatment}")]
+        public async Task<IActionResult> UpdatePatientTreatment([FromRoute] UpdatePatientTreatmentModel Treatment)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            var Success = await _PatientDL.UpdatePatientTreatment(Treatment.PatientID, Treatment.VisiteID, Treatment.Treatmen, Treatment.TreatmenText);
+            if (Success > 0)
+                return Ok();
+            else
+                return BadRequest();
 
+        }
         #endregion
 
     }
