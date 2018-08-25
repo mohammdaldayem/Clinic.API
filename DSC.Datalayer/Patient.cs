@@ -17,6 +17,7 @@ namespace DSC.Datalayer
         private const string SP_INSEART_PATIENT_IMAGE = "SP_InseartPatientImage";
         #region TreatmentSP
         private const string SP_GET_PATIENT_TREATMENT = "SP_GetPatientTreatment";
+        private const string SP_UPDATE_PATIENT_TREATMENT = "SP_UpdatePatientTreatment";
         #endregion
 
         public async Task<List<PatientDto>> GetPatientInfo(DateTime? FromDate, DateTime? ToDate,int? EmployeeID,string PatientName,int? PatientID)
@@ -125,6 +126,25 @@ namespace DSC.Datalayer
                 throw ex;
             }
         }
+
+        public async Task<int> UpdatePatientTreatment(int PatientID, int Visitid, string Treatment, string TreatmentText)
+        {
+            try
+            {
+                return await DatabaseExecuter.Instance.ExecuteNonQuery(SP_UPDATE_PATIENT_TREATMENT, delegate (SqlCommand objSQLCommandGetAll)
+                {
+                    objSQLCommandGetAll.Parameters.AddWithValue("@patientid", (object)PatientID ?? DBNull.Value);
+                    objSQLCommandGetAll.Parameters.AddWithValue("@visitid", (object)Visitid ?? DBNull.Value);
+                    objSQLCommandGetAll.Parameters.AddWithValue("@Treatment", (object)Treatment ?? DBNull.Value);
+                    objSQLCommandGetAll.Parameters.AddWithValue("@TreatmentText", value: (object)TreatmentText ?? DBNull.Value);
+                });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         #endregion
     }
 }

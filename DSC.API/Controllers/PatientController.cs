@@ -64,6 +64,7 @@ namespace DSC.API.Controllers
             string Tratment = await _PatientDL.GetPatientTreatment(PatientID, VisitID);
             return Ok(Tratment);
         }
+
         #endregion
 
     }
