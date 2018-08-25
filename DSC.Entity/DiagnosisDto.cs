@@ -9,6 +9,6 @@ namespace DSC.Entity
         public int DiagnosisID { set; get; }
         public string DiagnosisName { set; get; }
         public string ParentDiagnosisID { set; get; }
-        public bool IsDeleted { set; get; }
+        public bool IsDeleted { set; get; } 
     }
 }
