@@ -78,5 +78,28 @@ namespace DSC.API.Controllers
         }
         #endregion
 
+        #region Dignosis
+        [HttpGet]
+        [Route ("GetPatientDignosis/{VisitID}")]
+        public async Task<IActionResult> GetPatientDignosis (int VisitID)
+        {
+            if (!ModelState.IsValid) return BadRequest (ModelState);
+            string Tratment = await _PatientDL.GetPatientDiagnosis (VisitID);
+            return Ok (Tratment);
+        }
+
+        [HttpPost]
+        [Route ("InseartPatientImage/{Diagnosis}")]
+        public async Task<IActionResult> UpdatePatientDiagnosis ([FromRoute] UpdatePatientDiagnosisModel Diagnosis)
+        {
+            if (!ModelState.IsValid) return BadRequest (ModelState);
+            var Success = await _PatientDL.UpdatePatientTreatment (Treatment.PatientID, Treatment.VisiteID, Treatment.Treatmen, Treatment.TreatmenText);
+            if (Success > 0)
+                return Ok ();
+            else
+                return BadRequest ();
+
+        }
+        #endregion
     }
 }

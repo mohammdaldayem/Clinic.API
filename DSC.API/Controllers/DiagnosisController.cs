@@ -14,14 +14,14 @@ namespace DSC.API.Controllers
         private readonly Diagnosis _diagnosisDL;
         public DiagnosisController ()
         {
-            _diagnosisDL = new Diagnosis();
+            _diagnosisDL = new Diagnosis ();
         }
         [HttpGet]
-        [Route ("GetTreatment")]
-        public async Task<IActionResult> GetTreatment()
+        [Route ("GetDiagnosis")]
+        public async Task<IActionResult> GetDiagnosis ()
         {
             if (!ModelState.IsValid) return BadRequest (ModelState);
-            var DiagnosisParents = await _diagnosisDL.LoadDiagnosisParents(false);
+            var DiagnosisParents = await _diagnosisDL.LoadDiagnosisParents (false);
             foreach (var _diagnosisParent in DiagnosisParents)
             {
                 _diagnosisParent.Diagnosis = await _diagnosisDL.LoadDiagnosis (_diagnosisParent.ParentOperationID, false);

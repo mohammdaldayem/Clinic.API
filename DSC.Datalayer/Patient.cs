@@ -19,6 +19,10 @@ namespace DSC.Datalayer
         private const string SP_GET_PATIENT_TREATMENT = "SP_GetPatientTreatment";
         private const string SP_UPDATE_PATIENT_TREATMENT = "SP_UpdatePatientTreatment";
         #endregion
+        #region DiagnosisSP
+        private const string SP_GET_PATIENT_DIAGNOSIS = "SP_GetPatientDiagnosis";
+        private const string SP_UPDATE_PATIENT_DIAGNOSIS = "SP_UpdatePatientDiagnosis";
+        #endregion
 
         public async Task<List<PatientDto>> GetPatientInfo(DateTime? FromDate, DateTime? ToDate,int? EmployeeID,string PatientName,int? PatientID)
         {
@@ -145,6 +149,49 @@ namespace DSC.Datalayer
             }
         }
 
+        #endregion
+        #region Diagnosis
+        public async Task<string> GetPatientDiagnosis (int VisiteID)
+        {
+            string Treatment = string.Empty;
+            try
+            {
+                await DatabaseExecuter.Instance.ExecuteReader (SP_GET_PATIENT_DIAGNOSIS, delegate (SqlCommand objSQLCommandGetAll)
+                {
+                    objSQLCommandGetAll.Parameters.AddWithValue ("@VisitID", (object)VisiteID ?? DBNull.Value);
+                }, delegate (SqlDataReader objSqlDataReader)
+                {
+                    while (objSqlDataReader.Read ())
+                    {
+                        Treatment = objSqlDataReader["Diagnosis"].ToString ();
+                    }
+                });
+                return Treatment;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<int> UpdatePatientDiagnosis (int PatientID, int Visitid,string Diagnosis, DateTime ImageDate, DateTime ImageTime,string ImageNote)
+        {
+            try
+            {
+                return await DatabaseExecuter.Instance.ExecuteNonQuery (SP_UPDATE_PATIENT_DIAGNOSIS, delegate (SqlCommand objSQLCommandGetAll)
+                {
+                    objSQLCommandGetAll.Parameters.AddWithValue ("@patientid", (object)PatientID ?? DBNull.Value);
+                    objSQLCommandGetAll.Parameters.AddWithValue ("@visitid", (object)Visitid ?? DBNull.Value);
+                    objSQLCommandGetAll.Parameters.AddWithValue ("@diagnosis", (object)Diagnosis ?? DBNull.Value);
+                    objSQLCommandGetAll.Parameters.AddWithValue ("@ImageDate", value: (object)ImageDate ?? DBNull.Value);
+                    objSQLCommandGetAll.Parameters.AddWithValue ("@ImageTime", value: (object)ImageTime ?? DBNull.Value);
+                    objSQLCommandGetAll.Parameters.AddWithValue ("@ImageNote", value: (object)ImageNote ?? DBNull.Value);
+                });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         #endregion
     }
 }
