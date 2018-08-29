@@ -13,12 +13,12 @@ namespace DSC.API.Models
         [Required]
         public int VisiteID { set; get; }
         [Required]
-        public int Diagnosis { set; get; }
+        public string Diagnosis { set; get; }
         [Required]
-        public int ImageDate { set; get; }
+        public DateTime ImageDate { set; get; }
         [Required]
-        public int ImageTime { set; get; }
+        public DateTime ImageTime { set; get; }
         [Required]
-        public int ImageNote { set; get; }
+        public string ImageNote { set; get; }
     }
 }

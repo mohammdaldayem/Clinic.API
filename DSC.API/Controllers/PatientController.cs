@@ -93,7 +93,7 @@ namespace DSC.API.Controllers
         public async Task<IActionResult> UpdatePatientDiagnosis ([FromRoute] UpdatePatientDiagnosisModel Diagnosis)
         {
             if (!ModelState.IsValid) return BadRequest (ModelState);
-            var Success = await _PatientDL.UpdatePatientTreatment (Treatment.PatientID, Treatment.VisiteID, Treatment.Treatmen, Treatment.TreatmenText);
+            var Success = await _PatientDL.UpdatePatientDiagnosis (Diagnosis.PatientID, Diagnosis.VisiteID, Diagnosis.Diagnosis, Diagnosis.ImageDate, Diagnosis.ImageTime, Diagnosis.ImageNote);
             if (Success > 0)
                 return Ok ();
             else
